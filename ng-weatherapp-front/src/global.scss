@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+$bg: rgb(245, 245, 245);
+
+@mixin Transition($properties, $duration, $timing) {
+    transition-property: $properties;
+    transition-duration: $duration;
+    transition-timing-function: $timing;
+}
+
+@mixin Position($position, $top, $right, $bottom, $left) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin Dock($position) {
+    position: $position;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+@mixin Size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin PaddingV($top, $bottom) {
+    padding-top: $top;
+    padding-bottom: $bottom;
+}
+
+@mixin PaddingH($left, $right) {
+    padding-left: $left;
+    padding-right: $right;
+}
+
+@mixin MarginV($top, $bottom) {
+    margin-top: $top;
+    margin-bottom: $bottom;
+}
+
+@mixin MarginH($left, $right) {
+    margin-left: $left;
+    margin-right: $right;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Roboto', 'Courier New', Courier, monospace;
+    color: white;
+}
+
+body { background-color: $bg; }
+
+$primary: purple;
+$secondary: rgb(151, 0, 151);
+$accent-3: rgb(236, 0, 236);
+
+.sidebar {
+    width: 400px;
+    @include Position(fixed, 0, unset, 0, 0);
+
+    background-color: purple;
+    box-shadow: -1px 0 8px 4px rgba(0,0,0,0.3);
+    z-index: 99;
+}
+
+input, button {
+    border: none;
+    appearance: none;
+    box-shadow: none;
+    outline: none;
+}
+
+button {
+    font-size: 120%;
+    width: 100%;
+    color: white;
+    background-color: $secondary;
+    padding: 10px;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 13px;
+
+    border-radius: 3px;
+    cursor: pointer;
+
+    box-shadow: 0px 2px 7px 4px rgba(0,0,0,0.08);
+
+    @include Transition((box-shadow, filter, background-color, color), 0.2s, ease-in-out);
+
+    &:hover {
+        filter: saturate(1.2);
+        box-shadow: 0px 2px 12px 10px rgba(0,0,0,0.08);
+
+        &:active {
+            filter: saturate(1.4);
+            box-shadow: 0px 2px 14px 12px rgba(0,0,0,0.08);
+        }
+    }
+
+    &:disabled {
+        pointer-events: none;
+
+        background-color: rgba(139, 139, 139, 0.157);
+        // background-color: rgb(146, 15, 146);
+        color: rgb(214, 214, 214);
+    }
+
+}
+
+input {
+    font-size: 120%;
+    width: 100%;
+    color: white;
+    background-color: $secondary;
+    padding: 15px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    margin-bottom: 13px;
+
+    &::placeholder {
+        color: rgb(194, 194, 194);
+        color: white;
+        opacity: 0.6;
+        @include Transition(transform, .2s, ease-in-out);
+    }
+
+    &:focus::placeholder {
+        transform: translateX((-300px));
+    }
+}
+
+.title {
+    font-size: 43px;
+    margin-bottom: 14px;
+}
+
+
+.noSelect,
+button {
+    user-select: none;
+}
+
+.foxy-input {
+    position: relative;
+
+    label {
+        left: 0;
+        transform: translate(15px, 21px);
+        position: absolute;
+        font-size: 18px;
+
+        color: rgb(194, 194, 194);
+        color: white;
+        opacity: 0.6;
+        transform-origin: 0 0;
+        @include Transition((transform, font-size, color, opacity), .14s, ease-in-out);
+    }
+
+    input:focus {
+        @include Transition((filter), .2s, ease-in-out);
+        filter: saturate(1.4);
+    }
+
+    input {
+        position: relative;
+    }
+
+    &.__filled label, & input:focus ~ label {       
+        transform: translate(15px, 9px) scale(0.8);
+        opacity: .8;
+    }
+}
+
+.MuiCircularProgress-circle, .MuiCircularProgress-circleIndeterminate {
+    color: $accent-3;
+}
+
+.foxy-loadingPanel {
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+
+    & > * {
+        margin-right: 15px;
+    }
+}
